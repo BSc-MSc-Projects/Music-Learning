@@ -29,7 +29,32 @@ def delete_unkown(df):
     black_list = ["", "Soundtrack", "Other", "Unknown"]
     row_to_del = []
     df = df.dropna(subset = ['genre'])
-    # df = df[pd.notnull(df['genre'])]
+    for i, row in df.iterrows():
+        for name in black_list:
+            if df.loc[i, "genre"] == name:
+                row_to_del.append(i)
+    df = df.drop(row_to_del)
+    return df
+
+
+def delete_outlayers(df, threshold):
+    # create an empty dictionary
+    genres = {}
+    for index, row in df.iterrows():
+        genre = row["genre"]
+        if genre in genres:
+            new_value = genres[genre] + 1
+            genres.update({genre: new_value})
+        else:
+            genres.update({genre: 1})
+
+    for k in genres.copy():
+        if genres[k] >= threshold:  # to update
+            genres.pop(k, None)
+
+    black_list = genres.keys()
+    #print(black_list)
+    row_to_del = []
     for i, row in df.iterrows():
         for name in black_list:
             if df.loc[i, "genre"] == name:
@@ -162,11 +187,13 @@ def manage_genres():
 
     df = delete_unkown(df)
 
-    df.to_csv(file_name_out, index=False)
-
     count_genres(df, 1)
-    count_genres(df, 5)
+    #count_genres(df, 5)
     count_genres(df, 15)
+    df = delete_outlayers(df, 15)
+
+    df.to_csv(file_name_out, index=False)
+    print("csv file is ready")
 
 
 # Press the green button in the gutter to run the script.
