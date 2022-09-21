@@ -2,11 +2,11 @@ import pandas as pd
 import operator
 
 
-def count_generes(df, threshold):
+def count_genres(df, threshold):
     # create an empty dictionary
     genres = {}
-    for i in range(len(df)):
-        genre = df.loc[i, "genre"]
+    for index, row in df.iterrows():
+        genre = row["genre"]
         if genre in genres:
             new_value = genres[genre] + 1
             genres.update({genre: new_value})
@@ -25,23 +25,30 @@ def count_generes(df, threshold):
     print(len(sorted_genres))
 
 
+def delete_unkown(df):
+    black_list = ["", "Soundtrack", "Other", "Unknown"]
+    row_to_del = []
+    df = df.dropna(subset = ['genre'])
+    # df = df[pd.notnull(df['genre'])]
+    for i, row in df.iterrows():
+        for name in black_list:
+            if df.loc[i, "genre"] == name:
+                row_to_del.append(i)
+    df = df.drop(row_to_del)
+    return df
+
+
 def manage_genres():
     file_name = "C:\\Users\\Gian Marco\\Desktop\\csv_file.csv"
-    file_name_out = "C:\\Users\\Gian Marco\\Desktop\\out.csv"
+    file_name_out = ".\\out.csv"
 
     df = pd.read_csv(file_name, encoding='latin-1')
 
-    count_generes(df, 1)
-    #df = df.dropna(subset = ['genre'])
-    #df = df[pd.notnull(df['genre'])]
-    # df.drop(df[df["genre"] == "Soundtrack"].index, inplace=True)
+    count_genres(df, 1)
 
-    count_generes(df, 1)
-    # count_generes(df, 5)
-
-    for i in range(len(df)):
-        if not isinstance(df.loc[i, "genre"], float):
-            genre = df.loc[i, "genre"].lower()
+    for i, row in df.iterrows():
+        if not isinstance(row["genre"], float):
+            genre = row["genre"].lower()
             if "noise" in genre:
                 df.loc[i, "genre"] = "Noise"
             if "glitch" in genre:
@@ -88,8 +95,6 @@ def manage_genres():
                 df.loc[i, "genre"] = "Trip-Hop"
             if "downtempo" in genre:
                 df.loc[i, "genre"] = "Trip-Hop"
-            if "soul" in genre:
-                df.loc[i, "genre"] = "Soul"
             if "blues" in genre:
                 df.loc[i, "genre"] = "Blues"
             if "ambient" in genre:
@@ -146,16 +151,22 @@ def manage_genres():
                 df.loc[i, "genre"] = "Disco"
             if "punk" in genre:
                 df.loc[i, "genre"] = "Punk"
+            if "soul" in genre:
+                df.loc[i, "genre"] = "Soul-RnB"
+            if "r&b" in genre:
+                df.loc[i, "genre"] = "Soul-RnB"
 
             # valuta ordine elementi, ultimo è più presente
 
-    # df.to_csv(file_name_out, index=False)
+    count_genres(df, 1)
 
-    # df = df[pd.notnull(df['genre'])]
+    df = delete_unkown(df)
 
-    count_generes(df, 1)
-    count_generes(df, 5)
-    count_generes(df, 15)
+    df.to_csv(file_name_out, index=False)
+
+    count_genres(df, 1)
+    count_genres(df, 5)
+    count_genres(df, 15)
 
 
 # Press the green button in the gutter to run the script.
