@@ -15,7 +15,7 @@ def count_genres(df, threshold):
 
     dataset_elements = 0
     for k in genres.copy():
-        if genres[k] < threshold:  # to update
+        if genres[k] <= threshold:  # to update
             genres.pop(k, None)
         else:
             dataset_elements = dataset_elements + genres[k]
@@ -49,13 +49,16 @@ def delete_outlayers(df, threshold):
             genres.update({genre: 1})
 
     for k in genres.copy():
-        if genres[k] >= threshold:  # to update
+        if genres[k] > threshold:  # to update
             genres.pop(k, None)
 
     black_list = list(genres.keys())
     black_list.remove("Country")
     black_list.remove("Spoken")
     black_list.remove("Soul-RnB")
+    black_list.remove("Disco")      # forse da togliere
+    black_list.remove("Balkan")
+    black_list.remove("Industrial")
     #print(black_list)
     row_to_del = []
     for i, row in df.iterrows():
