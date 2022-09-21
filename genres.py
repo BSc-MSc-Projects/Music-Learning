@@ -52,7 +52,10 @@ def delete_outlayers(df, threshold):
         if genres[k] >= threshold:  # to update
             genres.pop(k, None)
 
-    black_list = genres.keys()
+    black_list = list(genres.keys())
+    black_list.remove("Country")
+    black_list.remove("Spoken")
+    black_list.remove("Soul-RnB")
     #print(black_list)
     row_to_del = []
     for i, row in df.iterrows():
@@ -74,14 +77,22 @@ def manage_genres():
     for i, row in df.iterrows():
         if not isinstance(row["genre"], float):
             genre = row["genre"].lower()
+            if "pop" in genre:
+                df.loc[i, "genre"] = "Pop"
+            if "punk" in genre:
+                df.loc[i, "genre"] = "Rock"
+            if "ambient" in genre:
+                df.loc[i, "genre"] = "Ambient"
+            if "chip" in genre:
+                df.loc[i, "genre"] = "Chip Music"
+            if "idm" in genre:
+                df.loc[i, "genre"] = "Electronic"
             if "glitch" in genre:
                 df.loc[i, "genre"] = "Electronic"
             if "electr" in genre:
                 df.loc[i, "genre"] = "Electronic"
             if "afr" in genre:
                 df.loc[i, "genre"] = "African"
-            if "idm" in genre:
-                df.loc[i, "genre"] = "Electronic"
             if "reggae" in genre:
                 df.loc[i, "genre"] = "Reggae"
             if "dub" in genre:
@@ -106,8 +117,6 @@ def manage_genres():
                 df.loc[i, "genre"] = "Hip-Hop"
             if "international" in genre:
                 df.loc[i, "genre"] = "International"
-            if "chip" in genre:
-                df.loc[i, "genre"] = "Chip Music"
             if "avant" in genre:
                 df.loc[i, "genre"] = "Avant-Garde"
             if "classical" in genre:
@@ -120,8 +129,6 @@ def manage_genres():
                 df.loc[i, "genre"] = "Trip-Hop"
             if "blues" in genre:
                 df.loc[i, "genre"] = "Blues"
-            if "ambient" in genre:
-                df.loc[i, "genre"] = "Ambient"
             if "hard" in genre:
                 df.loc[i, "genre"] = "Hardcore"
             if "latin" in genre:
@@ -134,14 +141,10 @@ def manage_genres():
                 df.loc[i, "genre"] = "Rock"
             if "experimental" in genre:
                 df.loc[i, "genre"] = "Experimental"
-            if "punk" in genre:
-                df.loc[i, "genre"] = "Punk"
             if "alternative" in genre:
                 df.loc[i, "genre"] = "Alternative"
             if "shoegaze" in genre:
                 df.loc[i, "genre"] = "Alternative"
-            if "pop" in genre:
-                df.loc[i, "genre"] = "Pop"
             if "garage" in genre:
                 df.loc[i, "genre"] = "Rock"
             if "techno" in genre:
@@ -173,8 +176,8 @@ def manage_genres():
 
     count_genres(df, 1)
     #count_genres(df, 5)
-    count_genres(df, 40)
-    df = delete_outlayers(df, 40)
+    count_genres(df, 135)
+    df = delete_outlayers(df, 135)
 
     df.to_csv(file_name_out, index=False)
     print("csv file is ready")
