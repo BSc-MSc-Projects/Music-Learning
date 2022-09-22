@@ -26,7 +26,7 @@ def count_genres(df, threshold):
 
 
 def delete_unkown(df):
-    black_list = ["", "Soundtrack", "Other", "Unknown", "Unclassifiable"]
+    black_list = ["", "Soundtrack", "Other", "Unknown", "Unclassifiable", "Noise"]
     row_to_del = []
     df = df.dropna(subset = ['genre'])
     for i, row in df.iterrows():
@@ -55,10 +55,6 @@ def delete_outlayers(df, threshold):
     black_list = list(genres.keys())
     if "Country" in black_list:
         black_list.remove("Country")
-    if "Spoken" in black_list:
-        black_list.remove("Spoken")
-    if "Soul-RnB" in black_list:
-        black_list.remove("Soul-RnB")
     row_to_del = []
     for i, row in df.iterrows():
         for name in black_list:
@@ -72,10 +68,22 @@ def reduce_subgenres(df):
     for i, row in df.iterrows():
         if not isinstance(row["genre"], float):
             genre = row["genre"].lower()
-            if "noise" in genre:
-                df.loc[i, "genre"] = "Noise"
+            if "soul" in genre:
+                df.loc[i, "genre"] = "Soul-RnB"
+            if "rnb" in genre:
+                df.loc[i, "genre"] = "Soul-RnB"
+            if "disco" in genre:
+                df.loc[i, "genre"] = "Soul-RnB"
+            if "funk" in genre:
+                df.loc[i, "genre"] = "Soul-RnB"
             if "house" in genre:
                 df.loc[i, "genre"] = "Electronic"
+            if "pop" in genre:
+                df.loc[i, "genre"] = "Pop"
+            if "alternative" in genre:
+                df.loc[i, "genre"] = "Alternative"
+            if "experimental" in genre:
+                df.loc[i, "genre"] = "Experimental"
             if "punk" in genre:
                 df.loc[i, "genre"] = "Rock"
             if "ambient" in genre:
@@ -86,23 +94,17 @@ def reduce_subgenres(df):
                 df.loc[i, "genre"] = "Electronic"
             if "glitch" in genre:
                 df.loc[i, "genre"] = "Electronic"
-            if "reggae" in genre:
-                df.loc[i, "genre"] = "Reggae"
-            if "dub" in genre:
-                df.loc[i, "genre"] = "Reggae"
             if "instrumental" in genre:
                 df.loc[i, "genre"] = "Instrumental"
             if "surrism-phonoethics" in genre:
                 df.loc[i, "genre"] = "Electronic"
-            if "alternative" in genre:
-                df.loc[i, "genre"] = "Alternative"
             if "shoegaze" in genre:
                 df.loc[i, "genre"] = "Alternative"
-            if "experimental" in genre:
-                df.loc[i, "genre"] = "Experimental"
             if "international" in genre:
                 df.loc[i, "genre"] = "International"
-            if "avant" in genre:
+            if "avant garde" in genre:
+                df.loc[i, "genre"] = "Avant-Garde"
+            if "avant-garde" in genre:
                 df.loc[i, "genre"] = "Avant-Garde"
             if "classical" in genre:
                 df.loc[i, "genre"] = "Classical"
@@ -114,9 +116,9 @@ def reduce_subgenres(df):
                 df.loc[i, "genre"] = "Electronic"
             if "blues" in genre:
                 df.loc[i, "genre"] = "Blues"
-            if "hard" in genre:
-                df.loc[i, "genre"] = "Hardcore"
             if "core" in genre:
+                df.loc[i, "genre"] = "Hardcore"
+            if "hard" in genre:
                 df.loc[i, "genre"] = "Hardcore"
             if "rock" in genre:
                 df.loc[i, "genre"] = "Rock"
@@ -126,10 +128,6 @@ def reduce_subgenres(df):
                 df.loc[i, "genre"] = "Electronic"
             if "metal" in genre:
                 df.loc[i, "genre"] = "Metal"
-            if "lo-fi" in genre:
-                df.loc[i, "genre"] = "Lo-Fi"
-            if "pop" in genre:
-                df.loc[i, "genre"] = "Pop"
             if "hip-hop" in genre:
                 df.loc[i, "genre"] = "Hip-Hop"
             if "hip hop" in genre:
@@ -140,16 +138,10 @@ def reduce_subgenres(df):
                 df.loc[i, "genre"] = "Jazz"
             if "folk" in genre:
                 df.loc[i, "genre"] = "Folk"
-            if "spoken" in genre:
-                df.loc[i, "genre"] = "Spoken"
             if "country" in genre:
                 df.loc[i, "genre"] = "Country"
             if "bluegrass" in genre:
                 df.loc[i, "genre"] = "Country"
-            if "soul" in genre:
-                df.loc[i, "genre"] = "Soul-RnB"
-            if "rnb" in genre:
-                df.loc[i, "genre"] = "Soul-RnB"
 
 
 def post_processing(file_name):
@@ -158,14 +150,14 @@ def post_processing(file_name):
 
     df = pd.read_csv(file_name, encoding='latin-1')
 
-    #count_genres(df, 1)
+    count_genres(df, 1)
     reduce_subgenres(df)
 
-    #count_genres(df, 1)
+    count_genres(df, 1)
     df = delete_unkown(df)
 
-    #count_genres(df, 1)
-    #count_genres(df, 100)
+    count_genres(df, 1)
+    count_genres(df, 100)
     df = delete_outlayers(df, 100)
 
     df.to_csv(file_name_out, index=False)
