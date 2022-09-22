@@ -15,7 +15,7 @@ def count_genres(df, threshold):
 
     dataset_elements = 0
     for k in genres.copy():
-        if genres[k] <= threshold:  # to update
+        if genres[k] <= threshold:
             genres.pop(k, None)
         else:
             dataset_elements = dataset_elements + genres[k]
@@ -49,7 +49,7 @@ def delete_outlayers(df, threshold):
             genres.update({genre: 1})
 
     for k in genres.copy():
-        if genres[k] > threshold:  # to update
+        if genres[k] > threshold:
             genres.pop(k, None)
 
     black_list = list(genres.keys())
@@ -59,8 +59,6 @@ def delete_outlayers(df, threshold):
         black_list.remove("Spoken")
     if "Soul-RnB" in black_list:
         black_list.remove("Soul-RnB")
-    if "Downtempo" in black_list:
-        black_list.remove("Downtempo")
     row_to_del = []
     for i, row in df.iterrows():
         for name in black_list:
@@ -113,7 +111,7 @@ def reduce_subgenres(df):
             if "trip hop" in genre:
                 df.loc[i, "genre"] = "Electronic"
             if "downtempo" in genre:
-                df.loc[i, "genre"] = "Downtempo"
+                df.loc[i, "genre"] = "Electronic"
             if "blues" in genre:
                 df.loc[i, "genre"] = "Blues"
             if "hard" in genre:
@@ -154,8 +152,8 @@ def reduce_subgenres(df):
                 df.loc[i, "genre"] = "Soul-RnB"
 
 
-def post_processing(): #file_name):
-    file_name = "C:\\Users\\Gian Marco\\Desktop\\csv_file.csv"
+def post_processing(file_name):
+
     file_name_out = ".\\out.csv"
 
     df = pd.read_csv(file_name, encoding='latin-1')
@@ -176,4 +174,5 @@ def post_processing(): #file_name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    post_processing()
+    file_name = ".\\raw_csv_file.csv"
+    post_processing(file_name)
