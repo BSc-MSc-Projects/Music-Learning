@@ -20,3 +20,17 @@ def basic_plot(fig_size, x_array, y_array, x_label, y_label, title):
     plt.ylabel(y_label)
     plt.title(title)
     plt.show()
+
+
+# Basic barplot utility
+#
+# @param fig_size:  tuple, for changing the figure figure figure size
+# @param x_array:   x axis data
+# @param labels:    label array data 
+# @param title:     plot title 
+#
+def bar_plot(fig_size, x_array, labels, title):
+    plt.figure(figsize=fig_size)
+    plt.bar(labels, x_array)
+    plt.title(title)
+    plt.show()
