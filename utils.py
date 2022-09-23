@@ -4,6 +4,10 @@
 
 '''
 
+from tkinter import Tk     # from tkinter import Tk for Python 3.x
+from tkinter.filedialog import askopenfilename
+
+
 # Write the Confusion Matrix on an output file,
 # in the format of a csv
 #
@@ -32,3 +36,13 @@ def write_cm_on_file(cm, labels, path):
         row = ""
         index+=1
     cm_file.close()
+
+
+# File loader
+#
+# @returns: filepath of the chosen file 
+#
+def open_file_dialog():
+    Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
+    filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
+    return filename
