@@ -145,16 +145,24 @@ def get_features(writer):
                     print("tinyTag error: " + file_path)
 
         
-def retrieve_header():
-    header = ["filename", "title", "artist", "album"]
-    features = ["chroma_stft", "chroma_cens", "chroma_cqt", "fourier_tempogram", "melspectrogram", "mfcc", "poly_features",
-                "rms", "spectral_bandwidth", "spectral_centroid", "spectral_contrast", "spectral_flatness",
-                "spectral_rolloff", "tempogram", "tonnetz", "zero_crossing_rate"]
-    moments = ["mean", "min", "max", "median", "std", "skew", 'kurtosis']
+def retrieve_header(option=0):
+    header = []
+    if option == 0:
+        header = ["filename", "title", "artist", "album"]
+        features = ["chroma_stft", "chroma_cens", "chroma_cqt", "fourier_tempogram", "melspectrogram", "mfcc", "poly_features",
+                    "rms", "spectral_bandwidth", "spectral_centroid", "spectral_contrast", "spectral_flatness",
+                    "spectral_rolloff", "tempogram", "tonnetz", "zero_crossing_rate"]
+        moments = ["mean", "min", "max", "median", "std", "skew", 'kurtosis']
+    else:
+        features = ["chroma_stft", "chroma_cens", "chroma_cqt", "melspectrogram", "mfcc",
+                    "poly_features", "rms", "spectral_bandwidth", "spectral_centroid", "spectral_contrast", "spectral_flatness",
+                    "spectral_rolloff", "tempogram", "tonnetz", "zero_crossing_rate"]
+        moments = ["mean", "min", "max", "median", "std", "skew", 'kurtosis']
     for feature in features:
         for moment in moments:
             header.append(feature + "_" + moment)
-    header.append("genre")
+    if option == 0:
+        header.append("genre")
     return header
   
 
