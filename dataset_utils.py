@@ -5,6 +5,11 @@
 import pandas as pd
 import ast
 import os
+from os.path import exists
+
+from collections import Counter
+
+rm_file = "run_metrics.csv"
 
 # There are some columns that have complex numbers as values. These columns are recognized and
 # deleted from the feature dataset
@@ -82,3 +87,70 @@ def load(filepath):
             tracks[column] = tracks[column].astype('category')
 
         return tracks
+
+
+
+# Functions for metrics comparison based on different execution profiles
+
+
+# @brief check if the metrics file exists, if not write the header line
+#
+def write_metrics_header():
+    header_line = "Classifier,SMOTE,FS,PCA,OVERS,Precision,Recall,F1\n"
+    if not exists(rm_file):
+        f = open(rm_file, "a")
+        f.write(header_line)
+        f.close()
+
+
+# @brief Write a metrics line in the overall file
+#
+# @param clf: string, classifier name
+# @param profile: the EXECUTION_PROFILE from .ipynb file
+# @param precisions: computed precision for each class
+# @param recalls: computed recall for each class
+# @param f1s: computed f1 for each class
+# @param y_test: test labels
+#
+def write_metrics(clf, profile, precisions, recalls, f1s, y_test):
+
+    f = open(rm_file, "a")  # open file in append mode
+    line = clf + "," + str(profile["SMOTE"])+","+str(profile["FS"])+","+str(profile["PCA"])+","+str(profile["OVERS"])+","
+
+    tot_precision = 0.0
+    tot_recall = 0.0
+    tot_f1 = 0.0
+    
+    test_counter = Counter(y_test)
+    for k,v in test_counter.items():
+        print("key {}")
+        tot_precision += precisions[k]*v
+        tot_recall += recalls[k]*v
+        tot_f1 += f1s[k]*v
+    
+    # Add to the line the computed metrics
+    line += str(tot_precision/len(y_test))+","+str(tot_recall/len(y_test))+","+str(tot_f1/len(y_test))+"\n"
+    print(line)
+    f.write(line)
+    f.close()
+
+
+# @brief write the header of a tuning csv file
+# @param filename: path of the file
+# @param header_line: the header to write
+#
+def write_tuning_header(filename, header_line):
+    if not exists(filename):
+        f = open(filename, "a")
+        f.write(header_line)
+        f.close()
+
+
+# @brief write a line on a tuning csv file 
+# @param filename: path of the file
+# @param header_line: the line to write
+#
+def write_on_tuning_file(filename, line):
+    f = open(filename, "a")
+    f.write(line)
+    f.close()
