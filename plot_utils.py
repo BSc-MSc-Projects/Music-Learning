@@ -2,6 +2,7 @@
 Utility functions for plotting
 '''
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 # As simple as plotting with plt.plot()
@@ -34,3 +35,31 @@ def bar_plot(fig_size, x_array, labels, title):
     plt.bar(labels, x_array)
     plt.title(title)
     plt.show()
+
+
+# Bar plot used to compare classifier with plain config, SMOTE and oversampling
+#
+# @param metrics_array_1: array for the first column
+# @param metrics_array_2: array for the second column
+# @param metrics_array_3: array for the third column
+# @param labels: labels array
+# @param title: chart title
+# @param xlabel: x-axis label
+# @param ylabel: y-axis label
+#
+def three_group_bar_plot(metrics_array_1, metrics_array_2, metrics_array_3, labels, title, xlabel, ylabel):
+    plt.figure(figsize=(30,15))
+    X_axis = np.arange(len(labels))
+    width = 0.25  # the width of the bars
+
+
+    plt.bar(X_axis-0.25, metrics_array_1, width, label="plain")
+    plt.bar(X_axis, metrics_array_2, width, label="oversampling")
+    plt.bar(X_axis + 0.25, metrics_array_3, width, label="SMOTE")
+
+    plt.xticks(X_axis, labels)
+
+    plt.legend(["Plain", "Oversampling", "SMOTE"])
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
