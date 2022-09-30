@@ -6,6 +6,9 @@
 
 from tkinter import Tk     # from tkinter import Tk for Python 3.x
 from tkinter.filedialog import askopenfilename
+from sklearn.metrics import precision_score, recall_score, f1_score
+from sklearn.metrics import classification_report
+import pandas as pd
 
 
 # Write the Confusion Matrix on an output file,
@@ -46,3 +49,33 @@ def open_file_dialog():
     Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
     filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
     return filename
+
+
+# Compute classification report, precision, recall, f1-score starting from a vector of predictions
+#
+# @param predictions: vector of predictions
+# @param y_set: label to predict
+# @param labels: classes labels
+#
+# @return a vector with the computed values
+#
+def compute_class_metrics(predictions, y_set, labels):
+
+    metrics = []
+
+    report = classification_report(y_set, predictions, output_dict=True, labels=labels)
+
+    # format the report table
+    df = pd.DataFrame(report).transpose()
+    df = df.astype({"precision": float, "recall": float,"f1-score": float, "support":int})
+
+    # compute precision, recall, f1-score
+    precision = precision_score(y_set, predictions, average=None, labels=labels)
+    recall = recall_score(y_set, predictions, average=None, labels=labels)
+    f1 = f1_score(y_set, predictions, average=None, labels=labels)
+
+    metrics.append(report)
+    metrics.append(precision)
+    metrics.append(recall)
+    metrics.append(f1)
+    return metrics
