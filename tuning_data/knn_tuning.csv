@@ -1,0 +1,12 @@
+k,PCA,FS,SMOTE,OVERS,accuracy
+5,False,False,False,False,0.4109574468085106
+10,False,False,False,False,0.4451570415400202
+20,False,False,False,False,0.46369300911854106
+30,False,False,False,False,0.47151975683890585
+40,False,False,False,False,0.46798378926038503
+50,False,False,False,False,0.46797365754812564
+60,False,False,False,False,0.4629837892603851
+70,False,False,False,False,0.46226950354609936
+80,False,False,False,False,0.4551418439716312
+90,False,False,False,False,0.4487183383991894
+100,False,False,False,False,0.4430192502532928

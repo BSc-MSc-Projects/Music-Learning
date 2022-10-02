@@ -1,0 +1,79 @@
+{
+    "pca_plain": {
+        "SVM": {
+            "n_components": 90,
+            "C": 1
+        },
+        "LR": {
+            "n_components": 60,
+            "solver": "sag",
+            "penalty": "none" 
+        },
+        "kNN": {
+            "n_components": 30,
+            "n_neighbours": 15 
+        },
+        "MLP": {
+            "n_components": 90,
+            "alpha": 0.001,
+            "hidden_layer_sizes": 20
+        },
+        "DT": {
+            "n_components": 30,
+            "min_samples_leaf": 25,
+            "min_samples_split": 4 
+        }
+    },
+
+    "pca_smote": {
+        "SVM": {
+            "n_components": 90,
+            "C": 1
+        },
+        "LR": {
+            "n_components": 60,
+            "solver": "sag",
+            "penalty": "none" 
+        },
+        "kNN": {
+            "n_components": 40,
+            "n_neighbours": 20 
+        },
+        "MLP": {
+            "n_components": 90,
+            "alpha": 0.00001,
+            "hidden_layer_sizes": 150
+        },
+        "DT": {
+            "n_components": 30,
+            "min_samples_leaf": 25,
+            "min_samples_split": 8
+        }
+    },
+
+    "pca_overs": {
+        "SVM": {
+            "n_components": 90,
+            "C": 1
+        },
+        "LR": {
+            "n_components": 60,
+            "solver": "sag",
+            "penalty": "none" 
+        },
+        "kNN": {
+            "n_components": 40,
+            "n_neighbours": 20 
+        },
+        "MLP": {
+            "n_components": 60,
+            "alpha": 0.001,
+            "hidden_layer_sizes": 20
+        },
+        "DT": {
+            "n_components": 30,
+            "min_samples_leaf": 25,
+            "min_samples_split": 4
+        }
+    }
+}

@@ -1,0 +1,5 @@
+solver,penality,PCA,FS,SMOTE,OVERS,accuracy
+newton-cg,l2,False,False,False,False,0.5235005065856131
+sag,l2,False,False,False,False,0.47934143870314083
+saga,l1,False,False,False,False,0.4743617021276596
+lbfgs,l2,False,False,False,False,0.4729432624113475

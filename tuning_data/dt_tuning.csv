@@ -1,0 +1,11 @@
+min_samples_leaf,PCA,FS,SMOTE,OVERS,accuracy
+10,False,False,False,False,0.44306484295845994
+20,False,False,False,False,0.4594123606889564
+30,False,False,False,False,0.46509625126646403
+40,False,False,False,False,0.47150455927051677
+50,False,False,False,False,0.4657750759878419
+60,False,False,False,False,0.45510638297872336
+70,False,False,False,False,0.4394123606889564
+80,False,False,False,False,0.43086119554204655
+90,False,False,False,False,0.42946808510638296
+100,False,False,False,False,0.42733535967578523
