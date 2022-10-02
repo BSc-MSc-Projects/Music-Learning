@@ -1,77 +1,140 @@
 {
-    "pca_plain": {
+    "plain": {
         "SVM": {
-            "n_components": 90,
-            "C": 1
+            "C_best": 50
         },
         "LR": {
-            "n_components": 60,
-            "solver": "sag",
+            "solver": "newton-cg",
+            "penalty": "l2" 
+        },
+        "kNN": {
+            "n_neighbours": 20 
+        },
+        "MLP": {
+            "alpha": 0.00001,
+            "hidden_layer_sizes": 75
+        },
+        "DT": {
+            "min_samples_leaf": 75,
+            "min_samples_split": 2
+        }
+    },
+    
+    "overs": {
+        "SVM": {
+            "C_best": 100
+        },
+        "LR": {
+            "solver": "newton-cg",
             "penalty": "none" 
         },
         "kNN": {
-            "n_components": 30,
-            "n_neighbours": 15 
+            "n_neighbours": 2 
+        },
+        "MLP": {
+            "alpha": 0.00001,
+            "hidden_layer_sizes": 100
+        },
+        "DT": {
+            "min_samples_leaf": 2,
+            "min_samples_split": 2
+        }
+    },
+
+    "smote": {
+        "SVM": {
+            "C_best": 50
+        },
+        "LR": {
+            "solver": "newton-cg",
+            "penalty": "none" 
+        },
+        "kNN": {
+            "n_neighbours": 2 
+        },
+        "MLP": {
+            "alpha": 0.0001,
+            "hidden_layer_sizes": 150
+        },
+        "DT": {
+            "min_samples_leaf": 2,
+            "min_samples_split": 2
+        }
+    },
+
+    "pca_plain": {
+        "SVM": {
+            "n_components": 90,
+            "C": 10
+        },
+        "LR": {
+            "n_components": 90,
+            "solver": "newton-cg",
+            "penalty": "l2" 
+        },
+        "kNN": {
+            "n_components": 90,
+            "n_neighbours": 10 
         },
         "MLP": {
             "n_components": 90,
-            "alpha": 0.001,
-            "hidden_layer_sizes": 20
+            "alpha": 0.1,
+            "hidden_layer_sizes": 50
         },
         "DT": {
-            "n_components": 30,
-            "min_samples_leaf": 25,
-            "min_samples_split": 4 
+            "n_components": 40,
+            "min_samples_leaf": 50,
+            "min_samples_split": 2
         }
     },
 
     "pca_smote": {
         "SVM": {
             "n_components": 90,
-            "C": 1
+            "C": 50
         },
         "LR": {
-            "n_components": 60,
-            "solver": "sag",
+            "n_components": 90,
+            "solver": "newton-cg",
             "penalty": "none" 
         },
         "kNN": {
-            "n_components": 40,
-            "n_neighbours": 20 
+            "n_components": 90,
+            "n_neighbours": 2 
         },
         "MLP": {
             "n_components": 90,
             "alpha": 0.00001,
-            "hidden_layer_sizes": 150
+            "hidden_layer_sizes": 20
         },
         "DT": {
-            "n_components": 30,
-            "min_samples_leaf": 25,
-            "min_samples_split": 8
+            "n_components": 90,
+            "min_samples_leaf": 1,
+            "min_samples_split": 2
         }
     },
 
     "pca_overs": {
         "SVM": {
             "n_components": 90,
-            "C": 1
+            "C": 100
         },
         "LR": {
-            "n_components": 60,
-            "solver": "sag",
+            "n_components": 90,
+            "solver": "newton-cg",
             "penalty": "none" 
         },
         "kNN": {
-            "n_components": 40,
-            "n_neighbours": 20 
+            "n_components": 90,
+            "n_neighbours": 2 
         },
         "MLP": {
-            "n_components": 60,
-            "alpha": 0.001,
+            "n_components": 90,
+            "alpha": 0.00001,
             "hidden_layer_sizes": 20
         },
         "DT": {
-            "n_components": 30,
+            "n_components": 40,
             "min_samples_leaf": 25,
             "min_samples_split": 4
         }
