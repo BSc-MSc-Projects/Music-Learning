@@ -67,14 +67,15 @@ def compute_class_metrics(predictions, y_set, labels):
 
     # format the report table
     df = pd.DataFrame(report).transpose()
-    df = df.astype({"precision": float, "recall": float,"f1-score": float, "support":int})
+    df = df.astype({"precision": float, "recall": float, "f1-score": float, "support":int})
+    df.style.set_caption("Metrics for SVM")
 
     # compute precision, recall, f1-score
     precision = precision_score(y_set, predictions, average=None, labels=labels)
     recall = recall_score(y_set, predictions, average=None, labels=labels)
     f1 = f1_score(y_set, predictions, average=None, labels=labels)
 
-    metrics.append(report)
+    metrics.append(df)
     metrics.append(precision)
     metrics.append(recall)
     metrics.append(f1)

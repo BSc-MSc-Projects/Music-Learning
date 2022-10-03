@@ -3,6 +3,7 @@ Utility functions for plotting
 '''
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
 
 
 # As simple as plotting with plt.plot()
@@ -46,8 +47,10 @@ def bar_plot(fig_size, x_array, labels, title):
 # @param title: chart title
 # @param xlabel: x-axis label
 # @param ylabel: y-axis label
+# @param legend: list with bar legend
 #
-def three_group_bar_plot(metrics_array_1, metrics_array_2, metrics_array_3, labels, title, xlabel, ylabel):
+def three_group_bar_plot(metrics_array_1, metrics_array_2, metrics_array_3, labels, 
+        title, xlabel, ylabel, legend):
     plt.figure(figsize=(30,15))
     X_axis = np.arange(len(labels))
     width = 0.25  # the width of the bars
@@ -59,7 +62,21 @@ def three_group_bar_plot(metrics_array_1, metrics_array_2, metrics_array_3, labe
 
     plt.xticks(X_axis, labels)
 
-    plt.legend(["Plain", "Oversampling", "SMOTE"])
+    plt.legend(legend)
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
+
+
+# Print confusion matrix using seaborn
+#
+# @param svm_cm:    confusion matrix
+# @param labels:    labels for matrix axis
+# @param title:     matrix title
+#
+def print_cm(svm_cm, labels, title):
+    dims = (13.7, 10.27)
+    fig, ax = plt.subplots(figsize=dims)
+    plt.title(title)
+    sns.heatmap(svm_cm, annot=True, linewidths=.5, ax=ax, 
+            xticklabels=labels, yticklabels=labels, fmt='g', vmin=0, vmax=500)
