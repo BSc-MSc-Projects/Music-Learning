@@ -66,6 +66,11 @@ def compute_class_metrics(predictions, y_set, labels):
     report = classification_report(y_set, predictions, output_dict=True, labels=labels)
 
     # format the report table
+    accuracy = report["accuracy"]
+    
+    # delete accuracy from each row
+    report.pop("accuracy")
+
     df = pd.DataFrame(report).transpose()
     df = df.astype({"precision": float, "recall": float, "f1-score": float, "support":int})
     df.style.set_caption("Metrics for SVM")
@@ -79,4 +84,16 @@ def compute_class_metrics(predictions, y_set, labels):
     metrics.append(precision)
     metrics.append(recall)
     metrics.append(f1)
+    metrics.append(accuracy)
     return metrics
+
+
+# Print accuracy table
+#
+# @param accuracy_dict: dictonary to format as pandas table
+#
+def print_acc_table(accuracy):
+    accuracy_dict = {'Metric':["Accuracy"], 'Score':[accuracy]}
+    accuracy_dict = pd.from_dict(accuracy_dict)
+    accuracy_dict = accuracy_dict.astype({"Score": float})
+    accuracy_dict
