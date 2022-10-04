@@ -94,6 +94,6 @@ def compute_class_metrics(predictions, y_set, labels):
 #
 def print_acc_table(accuracy):
     accuracy_dict = {'Metric':["Accuracy"], 'Score':[accuracy]}
-    accuracy_dict = pd.from_dict(accuracy_dict)
+    accuracy_dict = pd.DataFrame.from_dict(accuracy_dict)
     accuracy_dict = accuracy_dict.astype({"Score": float})
-    accuracy_dict
+    return accuracy_dict
