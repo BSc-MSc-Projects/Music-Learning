@@ -10,7 +10,8 @@ import csv
 from tinytag import TinyTag
 import operator
 
-
+# Set of functions for the purpose of retrieving the features of a music file
+# functions based on librosa library
 def get_mfcc(y, sr):
     mfcc = np.array(librosa.feature.mfcc(y=y, sr=sr))
     return mfcc
@@ -91,6 +92,10 @@ def get_fourier_tempogram(y, sr):
     return fourier_tempogram
 
 
+# Calcolate different values and moments starting from the arrays retrived by librosa library
+# @ param array: librosa's information about file
+#
+# @return: array that summarizes the information retrived
 def calculate_metrics(array):
     features = []
     mean = np.mean(array)
@@ -110,6 +115,9 @@ def calculate_metrics(array):
     return features
 
 
+# Open an audio file and retrieve information about it.
+# librosa analyzes the audio and
+# TinyTag retrives meta information on the file, when they are available.
 def get_features(writer):
     
     for dirpath, dirnames, filenames in os.walk("dataset"):
@@ -144,7 +152,8 @@ def get_features(writer):
                 except:
                     print("tinyTag error: " + file_path)
 
-        
+# Function with the aim of construct the header for the .csv file containing the dataset
+# if option = 0, metadata about the audio file are considered too
 def retrieve_header(option=0):
     header = []
     if option == 0:
@@ -165,7 +174,8 @@ def retrieve_header(option=0):
         header.append("genre")
     return header
   
-
+# Count the number of different genres in the dataset
+# Delete genres with multiplicity below a certain threshold
 def count_genres(df, threshold):
     # create an empty dictionary
     genres = {}
@@ -188,7 +198,8 @@ def count_genres(df, threshold):
     print(sorted_genres)
     print(len(sorted_genres))
 
-
+    
+# Delete from dataset genres not usefull
 def delete_unkown(df):
     black_list = ["", "Soundtrack", "Other", "Unknown", "Unclassifiable", "Noise"]
     row_to_del = []
@@ -201,6 +212,7 @@ def delete_unkown(df):
     return df
 
 
+# Delete from dataset genres with a small amount of instances
 def delete_outlayers(df, threshold):
     # create an empty dictionary
     genres = {}
@@ -228,6 +240,9 @@ def delete_outlayers(df, threshold):
     return df
 
 
+# Function with the aim of group together sub-genres similiar each other.
+# This is done in order to reduce the number of targets in dataset and to improve the
+# performance of classification algorithms.
 def reduce_subgenres(df):
     for i, row in df.iterrows():
         if not isinstance(row["genre"], float):
@@ -308,6 +323,7 @@ def reduce_subgenres(df):
                 df.loc[i, "genre"] = "Country"
 
 
+# Call a set of operations on raw dataset in order to make a clean and usable copy of it              
 def post_processing(file_name):
 
     file_name_out = ".\\out.csv"
@@ -329,6 +345,7 @@ def post_processing(file_name):
 
 
 # Press the green button in the gutter to run the script.
+# To use only for debugging
 if __name__ == '__main__':
     file_name = ".\\raw_csv_file.csv"
 
